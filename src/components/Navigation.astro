@@ -1,10 +1,8 @@
 ---
-const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 const navItems = [
-  { href: `${baseUrl}/`, label: '首页' },
-  { href: `${baseUrl}/blog/`, label: '博客' },
-  { href: `${baseUrl}/about/`, label: '关于' },
+  { href: '/', label: '首页' },
+  { href: '/blog/', label: '博客' },
+  { href: '/about/', label: '关于' },
 ];
 
 const currentPath = Astro.url.pathname;

@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 
-const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 const posts = await getCollection('posts', ({ data }) => {
   return data.draft !== true;
 });
@@ -20,7 +18,7 @@ const recentPosts = posts
           最新文章
         </h2>
         <a
-          href={`${baseUrl}/blog/`}
+          href="/blog/"
           class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium flex items-center gap-1"
         >
           查看全部
@@ -39,7 +37,7 @@ const recentPosts = posts
           });
           return (
             <article class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-200 dark:border-gray-700">
-              <a href={`${baseUrl}/blog/posts/${post.id}/`} class="block">
+              <a href={`/blog/posts/${post.id}/`} class="block">
                 <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-3">
                   <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
                   {post.data.tags.length > 0 && (
