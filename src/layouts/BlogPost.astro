@@ -20,15 +20,15 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
 ---
 
 <Layout title={title} description={description}>
-  <article class="max-w-3xl mx-auto px-4 py-12">
-    <header class="mb-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+  <article class="article-shell mx-auto px-5 py-10 md:py-12">
+    <header class="article-header mb-9 border-b border-stone-200 pb-6 dark:border-stone-800">
+      <h1 class="mb-3 font-serif text-2xl font-bold leading-tight tracking-normal text-stone-950 dark:text-stone-50 md:text-[1.7rem]">
         {title}
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
+      <p class="border-l-4 border-stone-200 pl-4 text-base leading-7 text-stone-600 dark:border-stone-700 dark:text-stone-300">
         {description}
       </p>
-      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+      <div class="mt-5 flex flex-wrap items-center gap-4 text-sm text-stone-500 dark:text-stone-400">
         <span class="flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -51,9 +51,9 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
         )}
       </div>
       {tags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mt-4">
+        <div class="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+            <span class="rounded-full border border-stone-200 px-3 py-1 text-sm text-stone-600 dark:border-stone-700 dark:text-stone-300">
               #{tag}
             </span>
           ))}
@@ -68,11 +68,11 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
     >
     </p>
 
-    <div data-post-content class="prose dark:prose-invert prose-lg max-w-none">
+    <div data-post-content class="prose">
       <slot />
     </div>
 
-    <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+    <footer class="mt-16 border-t border-stone-200 pt-8 dark:border-stone-800">
       <a
         href="/blog/"
         class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
