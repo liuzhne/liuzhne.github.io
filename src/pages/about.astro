@@ -36,7 +36,7 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
   duration: 7 + (index % 6),
   size: 10 + (index % 5) * 5,
   drift: index % 2 === 0 ? 42 + index : -38 - index,
-  type: ['data', 'network', 'light', 'grid', 'signal'][index % 5],
+  type: ['data', 'network', 'light', 'signal'][index % 4],
 }));
 ---
 
@@ -44,7 +44,6 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
   <div class="about-page">
     <section class="about-hero relative overflow-hidden px-4 py-24 text-center md:py-32">
       <div class="tech-field pointer-events-none absolute inset-0" aria-hidden="true">
-        <div class="tech-grid absolute inset-0"></div>
         <div class="network-line network-line-a absolute"></div>
         <div class="network-line network-line-b absolute"></div>
         <div class="network-line network-line-c absolute"></div>
@@ -56,13 +55,13 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
         ))}
       </div>
       <div class="relative mx-auto max-w-4xl">
-        <p class="mb-4 text-lg font-semibold text-blue-600 dark:text-blue-400 md:text-xl">
+        <p class="mb-4 text-lg font-semibold text-blue-600 dark:text-blue-300 md:text-xl">
           关于我
         </p>
         <h1 class="mx-auto max-w-3xl text-6xl font-bold tracking-tight text-gray-950 dark:text-white md:text-8xl">
           liuzhne
         </h1>
-        <p class="mx-auto mt-6 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 md:text-2xl">
+        <p class="mx-auto mt-6 max-w-2xl text-xl leading-8 text-gray-600 dark:text-blue-100/80 md:text-2xl">
           写代码，做系统，也记录一路上的技术判断。
         </p>
       </div>
@@ -171,24 +170,16 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
       linear-gradient(180deg, #eff6ff 0%, #f8fbff 56%, #ffffff 100%);
   }
 
-  .dark .about-hero {
+  :global(.dark) .about-hero {
     background:
-      radial-gradient(circle at 50% 18%, rgba(30, 64, 175, 0.24), transparent 28rem),
-      linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(17, 24, 39, 0));
+      radial-gradient(circle at 50% 28%, rgba(37, 99, 235, 0.28), transparent 28rem),
+      radial-gradient(circle at 16% 12%, rgba(96, 165, 250, 0.12), transparent 22rem),
+      linear-gradient(180deg, #020817 0%, #061226 52%, #08111f 100%);
   }
 
   .tech-field {
     transform-origin: 50% 38%;
     animation: field-burst 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .tech-grid {
-    opacity: 0.36;
-    background-image:
-      linear-gradient(rgba(59, 130, 246, 0.18) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59, 130, 246, 0.18) 1px, transparent 1px);
-    background-size: 72px 72px;
-    mask-image: radial-gradient(circle at 50% 38%, black 0, transparent 64%);
   }
 
   .network-line {
@@ -237,7 +228,6 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
   .tech-data::before,
   .tech-network::before,
   .tech-light::before,
-  .tech-grid::before,
   .tech-signal::before,
   .tech-data::after,
   .tech-network::after,
@@ -277,15 +267,6 @@ const techParticles = Array.from({ length: 32 }, (_, index) => ({
     border-radius: 999px;
     background: radial-gradient(circle, rgba(37, 99, 235, 0.34), rgba(147, 197, 253, 0.08) 58%, transparent 70%);
     filter: blur(0.5px);
-  }
-
-  .tech-grid::before {
-    inset: 12%;
-    border: 1px solid rgba(37, 99, 235, 0.36);
-    background-image:
-      linear-gradient(rgba(37, 99, 235, 0.28) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(37, 99, 235, 0.28) 1px, transparent 1px);
-    background-size: 7px 7px;
   }
 
   .tech-signal::before {
