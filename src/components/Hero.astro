@@ -2,95 +2,46 @@
 import animeCatAvatar from '../assets/avatar-anime-cat.png';
 
 const skills = [
-  'JavaScript',
+  'AI Engineering',
   'Java',
-  'K8s',
-  'Claude & CodeX',
-  'Python',
-  'Go',
-];
-
-const socialLinks = [
-  {
-    name: '抖音',
-    href: 'https://www.douyin.com/',
-    icon: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.18 2c.34 2.7 1.86 4.26 4.43 4.43v3.5a8.3 8.3 0 0 1-4.35-1.27v6.42c0 3.66-2.6 6.92-6.36 6.92A6.51 6.51 0 0 1 3.4 15.5c0-3.83 3.26-6.73 7.03-6.44v3.58c-1.53-.35-3.28.8-3.28 2.83a2.8 2.8 0 0 0 2.78 2.82c1.63 0 2.72-1.1 2.72-3.22V2h3.53Z"/></svg>',
-  },
-  {
-    name: 'B 站',
-    href: 'https://www.bilibili.com/',
-    icon: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.4 9.4 6.8m7.4-2.4-2.2 2.4M5.6 7.2h12.8A2.6 2.6 0 0 1 21 9.8v6.6a3.2 3.2 0 0 1-3.2 3.2H6.2A3.2 3.2 0 0 1 3 16.4V9.8a2.6 2.6 0 0 1 2.6-2.6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.1v3.1m7.4-3.1v3.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-  },
-  {
-    name: 'Email',
-    href: 'mailto:1044307322@qq.com',
-    icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
-  },
+  'Cloud Native',
+  'Kubernetes',
+  'LLM Workflow',
+  'Knowledge Systems',
 ];
 ---
 
-<section class="py-20 md:py-32 px-4">
-  <div class="max-w-4xl mx-auto text-center">
-    <!-- Avatar -->
-    <div class="mb-8">
+<section class="border-b border-stone-200 dark:border-stone-800">
+  <div class="site-shell py-14 md:py-20">
+    <!-- Avatar and identity -->
+    <div class="mb-7 flex items-center gap-4">
       <img
         src={animeCatAvatar.src}
         width={128}
         height={128}
         alt="动漫猫猫科技博主头像"
-        class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full object-cover ring-2 ring-white shadow-lg"
+        class="h-20 w-20 rounded-lg object-cover ring-1 ring-stone-200 dark:ring-stone-800"
       />
+      <div>
+        <h1 class="font-serif text-4xl font-bold leading-tight tracking-normal text-stone-950 dark:text-stone-50 md:text-5xl">
+          liuzhne
+        </h1>
+        <p class="mt-2 text-sm font-medium text-stone-500 dark:text-stone-400">
+          AI Engineering / Research Notes
+        </p>
+      </div>
     </div>
 
-    <!-- Name & Title -->
-    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
-      liuzhne
-    </h1>
-    <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6">
-      全栈开发者 · 技术博主 · 开源爱好者
-    </p>
-
-    <!-- Bio -->
-    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
-      热爱编程，专注于 Web 开发和云原生技术。在这里分享我的技术心得、学习笔记和项目经验。
+    <p class="mb-5 border-l-4 border-stone-200 pl-4 text-lg leading-8 text-stone-700 dark:border-stone-700 dark:text-stone-300">
+      构建面向长期使用的 AI 工程系统，并记录 Java、云原生与研究工程实践。
     </p>
 
     <!-- Skills -->
-    <div class="flex flex-wrap justify-center gap-2 mb-10">
+    <div class="mb-9 flex flex-wrap gap-2">
       {skills.map((skill) => (
-        <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
+        <span class="rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 dark:border-stone-800 dark:bg-stone-950 dark:text-stone-300">
           {skill}
         </span>
-      ))}
-    </div>
-
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-      <a
-        href="/blog/"
-        class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-      >
-        阅读博客
-      </a>
-      <a
-        href="/about/"
-        class="px-8 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium rounded-lg transition-colors"
-      >
-        了解更多
-      </a>
-    </div>
-
-    <!-- Social Links -->
-    <div class="flex items-center justify-center gap-4">
-      {socialLinks.map((link) => (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          aria-label={link.name}
-          set:html={link.icon}
-        />
       ))}
     </div>
   </div>

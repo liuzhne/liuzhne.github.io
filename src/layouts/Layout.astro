@@ -49,12 +49,40 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#3b82f6" />
+    <meta name="theme-color" content="#f5f3ef" />
 
     <!-- Generator -->
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
+
+    <style is:inline>
+      nav svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      #mobile-menu-btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      #sun-icon {
+        display: none;
+      }
+
+      .dark #sun-icon {
+        display: block;
+      }
+
+      .dark #moon-icon {
+        display: none;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
 
     <!-- Dark mode initialization script -->
     <script is:inline>
@@ -66,7 +94,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       })();
     </script>
   </head>
-  <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <body class="min-h-screen flex flex-col bg-stone-50 text-stone-950 dark:bg-stone-950 dark:text-stone-100">
     <Navigation />
 
     <main class="flex-1">

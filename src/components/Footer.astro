@@ -1,46 +1,11 @@
 ---
 const currentYear = new Date().getFullYear();
-
-const socialLinks = [
-  {
-    name: '抖音',
-    href: 'https://www.douyin.com/',
-    icon: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.18 2c.34 2.7 1.86 4.26 4.43 4.43v3.5a8.3 8.3 0 0 1-4.35-1.27v6.42c0 3.66-2.6 6.92-6.36 6.92A6.51 6.51 0 0 1 3.4 15.5c0-3.83 3.26-6.73 7.03-6.44v3.58c-1.53-.35-3.28.8-3.28 2.83a2.8 2.8 0 0 0 2.78 2.82c1.63 0 2.72-1.1 2.72-3.22V2h3.53Z"/></svg>',
-  },
-  {
-    name: 'B 站',
-    href: 'https://www.bilibili.com/',
-    icon: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.4 9.4 6.8m7.4-2.4-2.2 2.4M5.6 7.2h12.8A2.6 2.6 0 0 1 21 9.8v6.6a3.2 3.2 0 0 1-3.2 3.2H6.2A3.2 3.2 0 0 1 3 16.4V9.8a2.6 2.6 0 0 1 2.6-2.6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 12.1v3.1m7.4-3.1v3.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-  },
-  {
-    name: 'Email',
-    href: 'mailto:your.email@example.com',
-    icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
-  },
-];
 ---
 
-<footer class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-  <div class="max-w-4xl mx-auto px-4 py-8">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      <!-- Copyright -->
-      <p class="text-sm text-gray-500 dark:text-gray-400">
-        © {currentYear} liuzhne. All rights reserved.
-      </p>
-
-      <!-- Social Links -->
-      <div class="flex items-center gap-4">
-        {socialLinks.map((link) => (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-            aria-label={link.name}
-            set:html={link.icon}
-          />
-        ))}
-      </div>
-    </div>
+<footer class="border-t border-stone-200 bg-stone-50 dark:border-stone-800 dark:bg-stone-950">
+  <div class="mx-auto max-w-[760px] px-5 py-8">
+    <p class="text-center text-sm text-stone-500 dark:text-stone-400">
+      © {currentYear} liuzhne. All rights reserved.
+    </p>
   </div>
 </footer>

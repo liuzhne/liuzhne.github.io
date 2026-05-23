@@ -4,8 +4,11 @@
 
 /* Custom color scheme */
 :root {
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
+  --color-primary: #292524;
+  --color-primary-dark: #fafaf9;
+  --color-ink: #1c1917;
+  --color-muted: #78716c;
+  --surface-subtle: #f5f3ef;
 }
 
 /* Dark mode support */
@@ -20,7 +23,36 @@ html {
 
 /* Base styles */
 body {
-  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased;
+  @apply bg-stone-50 text-stone-950 antialiased dark:bg-stone-950 dark:text-stone-100;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.soft-card {
+  @apply rounded-lg border border-stone-200 bg-white transition-colors duration-200 ease-out dark:border-stone-800 dark:bg-stone-950;
+}
+
+.soft-card:hover {
+  @apply border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-900;
+}
+
+.muted-meta {
+  @apply text-xs font-medium tracking-wide text-stone-500 dark:text-stone-400;
+}
+
+.site-shell {
+  @apply mx-auto max-w-[680px] px-5;
+}
+
+.site-link {
+  @apply text-stone-700 underline decoration-stone-300 underline-offset-4 transition-colors hover:text-stone-950 dark:text-stone-300 dark:decoration-stone-700 dark:hover:text-stone-50;
+}
+
+.site-button {
+  @apply rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-900 transition-colors hover:bg-stone-100 dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100 dark:hover:bg-stone-900;
+}
+
+.site-button-primary {
+  @apply rounded-lg border border-stone-900 bg-stone-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-stone-700 dark:border-stone-100 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-stone-300;
 }
 
 /* Typography enhancements */
@@ -58,11 +90,192 @@ body {
 }
 
 .prose pre {
-  @apply my-6 overflow-x-auto rounded-lg border border-stone-200 bg-white p-4 text-sm leading-7 shadow-sm dark:border-stone-800 dark:bg-stone-950;
+  @apply my-6 overflow-x-auto rounded-lg border border-stone-200 bg-white p-4 text-sm leading-7 shadow-sm dark:border-stone-800 dark:bg-stone-900;
+  background-color: #ffffff !important;
+  color: #292524 !important;
 }
 
 .prose pre code {
-  @apply border-0 bg-transparent p-0 text-stone-900 dark:text-stone-100;
+  @apply border-0 bg-transparent p-0;
+  color: inherit !important;
+}
+
+.prose pre code span {
+  color: inherit !important;
+}
+
+.prose .mermaid {
+  @apply my-6 overflow-x-auto rounded-lg border bg-white p-4 text-center shadow-sm md:p-5;
+  border-color: #eee7dd;
+}
+
+.prose .mermaid svg {
+  @apply mx-auto max-w-full;
+  height: auto !important;
+}
+
+.prose .mermaid.mermaid-tiny svg {
+  width: auto !important;
+  max-width: min(100%, 360px) !important;
+  max-height: 220px !important;
+}
+
+.prose .mermaid.mermaid-compact svg {
+  width: auto !important;
+  max-width: min(100%, 480px) !important;
+  max-height: 260px !important;
+}
+
+.prose .mermaid.mermaid-wide svg {
+  width: auto !important;
+  max-width: min(100%, 560px) !important;
+  max-height: 280px !important;
+}
+
+.prose .mermaid.mermaid-branchy svg {
+  width: auto !important;
+  max-width: min(100%, 520px) !important;
+  max-height: 260px !important;
+}
+
+.prose .mermaid.mermaid-tall svg {
+  width: auto !important;
+  max-height: 320px !important;
+}
+
+.prose .mermaid.mermaid-tiny.mermaid-tall svg {
+  max-height: 220px !important;
+}
+
+.prose .mermaid.mermaid-branchy.mermaid-tall svg {
+  max-height: 280px !important;
+}
+
+.prose .mermaid .node rect,
+.prose .mermaid .node polygon,
+.prose .mermaid .node path {
+  stroke-width: 1.4px !important;
+}
+
+.prose .mermaid .nodeLabel,
+.prose .mermaid .edgeLabel,
+.prose .mermaid .label,
+.prose .mermaid .cluster-label {
+  color: #35312d !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+}
+
+.prose .mermaid .nodeLabel {
+  font-size: 15px !important;
+}
+
+.prose .mermaid.mermaid-dense .nodeLabel,
+.prose .mermaid.mermaid-branchy .nodeLabel {
+  font-size: 13.5px !important;
+}
+
+.prose .mermaid .edgeLabel {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.prose .mermaid.mermaid-dense .edgeLabel,
+.prose .mermaid.mermaid-branchy .edgeLabel {
+  font-size: 12.5px !important;
+}
+
+.prose .mermaid .edgePath path,
+.prose .mermaid path.flowchart-link {
+  stroke: #aaa7a0 !important;
+  stroke-width: 2px !important;
+}
+
+.prose .mermaid marker path {
+  fill: #aaa7a0 !important;
+  stroke: #aaa7a0 !important;
+}
+
+.prose .mermaid .llm rect,
+.prose .mermaid .llm polygon,
+.prose .mermaid .llm path,
+.prose .mermaid .workflow rect,
+.prose .mermaid .workflow polygon,
+.prose .mermaid .workflow path {
+  fill: #f8fbf2 !important;
+  stroke: #b8d99a !important;
+}
+
+.prose .mermaid .llm .nodeLabel,
+.prose .mermaid .workflow .nodeLabel {
+  color: #4f8f36 !important;
+}
+
+.prose .mermaid .agent rect,
+.prose .mermaid .agent polygon,
+.prose .mermaid .agent path {
+  fill: #eef8f1 !important;
+  stroke: #8bc79a !important;
+}
+
+.prose .mermaid .agent .nodeLabel {
+  color: #338458 !important;
+}
+
+.prose .mermaid .gate rect,
+.prose .mermaid .gate polygon,
+.prose .mermaid .gate path {
+  fill: #f3f0ff !important;
+  stroke: #b8a8e8 !important;
+}
+
+.prose .mermaid .gate .nodeLabel {
+  color: #6f61aa !important;
+}
+
+.prose .mermaid .aggregator rect,
+.prose .mermaid .aggregator polygon,
+.prose .mermaid .aggregator path {
+  fill: #eef6fb !important;
+  stroke: #9fc7dc !important;
+}
+
+.prose .mermaid .aggregator .nodeLabel {
+  color: #3d7f9a !important;
+}
+
+.prose .mermaid .endpoint rect,
+.prose .mermaid .endpoint polygon,
+.prose .mermaid .endpoint path,
+.prose .mermaid .risky rect,
+.prose .mermaid .risky polygon,
+.prose .mermaid .risky path {
+  fill: #fff4ef !important;
+  stroke: #f1b8a8 !important;
+}
+
+.prose .mermaid .endpoint .nodeLabel,
+.prose .mermaid .risky .nodeLabel {
+  color: #c85b3c !important;
+}
+
+.prose .mermaid .cluster rect {
+  fill: transparent !important;
+  stroke: #eee7dd !important;
+}
+
+.prose .mermaid .cluster-label {
+  color: #6f6258 !important;
+}
+
+.dark .prose .mermaid {
+  border-color: #5b4a3f;
+  background: #1f1b17;
+}
+
+.dark .prose pre {
+  background-color: #1c1917 !important;
+  color: #f5f5f4 !important;
 }
 
 .prose img {
