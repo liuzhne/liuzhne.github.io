@@ -75,7 +75,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
     <footer class="mt-16 border-t border-stone-200 pt-8 dark:border-stone-800">
       <a
         href="/blog/"
-        class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+        class="inline-flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-50"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -166,4 +166,100 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
   postSearchInput?.addEventListener('input', () => {
     highlightPostMatches(postSearchInput.value);
   });
+</script>
+
+<script is:inline>
+  (() => {
+    const mermaidBlocks = Array.from(document.querySelectorAll('pre[data-language="mermaid"] > code'));
+    if (mermaidBlocks.length === 0) return;
+
+    function prepareMermaidBlocks() {
+      return mermaidBlocks.map((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        const mermaidContainer = document.createElement('div');
+        mermaidContainer.className = 'mermaid';
+        mermaidContainer.textContent = codeBlock.textContent || '';
+        pre?.replaceWith(mermaidContainer);
+        return mermaidContainer;
+      });
+    }
+
+    function resizeMermaidDiagrams() {
+      document.querySelectorAll('.mermaid').forEach((diagram) => {
+        const nodeCount = diagram.querySelectorAll('g.node').length;
+        const edgeCount = diagram.querySelectorAll('path.flowchart-link').length;
+        const svg = diagram.querySelector('svg');
+        if (!svg || nodeCount === 0) return;
+
+        const viewBox = svg.viewBox?.baseVal;
+        const renderedBox = svg.getBoundingClientRect();
+        const diagramWidth = viewBox?.width || renderedBox.width;
+        const diagramHeight = viewBox?.height || renderedBox.height || 1;
+        const aspectRatio = diagramWidth / diagramHeight;
+        const isTall = nodeCount >= 3 && aspectRatio <= 1.45;
+        const isWide = nodeCount >= 5 && aspectRatio >= 2.15;
+        const isBranchy = nodeCount >= 5 && (edgeCount > nodeCount || aspectRatio >= 3);
+        const isDense = nodeCount >= 7;
+
+        diagram.classList.toggle('mermaid-tiny', nodeCount <= 3);
+        diagram.classList.toggle('mermaid-compact', nodeCount > 3 && nodeCount <= 4);
+        diagram.classList.toggle('mermaid-tall', isTall);
+        diagram.classList.toggle('mermaid-wide', isWide);
+        diagram.classList.toggle('mermaid-branchy', isBranchy);
+        diagram.classList.toggle('mermaid-dense', isDense);
+      });
+    }
+
+    async function renderMermaid() {
+      if (!window.mermaid) return;
+
+      prepareMermaidBlocks();
+      window.mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        securityLevel: 'strict',
+        flowchart: {
+          curve: 'basis',
+          htmlLabels: true,
+          nodeSpacing: 46,
+          rankSpacing: 58,
+          padding: 16,
+        },
+        themeVariables: {
+          background: 'transparent',
+          mainBkg: '#fffaf2',
+          secondBkg: '#fffaf2',
+          tertiaryColor: '#fffaf2',
+          primaryColor: '#fffaf2',
+          primaryTextColor: '#2f2a25',
+          primaryBorderColor: '#aaa7a0',
+          secondaryColor: '#fffaf2',
+          secondaryTextColor: '#2f2a25',
+          secondaryBorderColor: '#aaa7a0',
+          tertiaryTextColor: '#2f2a25',
+          tertiaryBorderColor: '#aaa7a0',
+          lineColor: '#aaa7a0',
+          textColor: '#241f1a',
+          clusterBkg: 'transparent',
+          clusterBorder: '#eee7dd',
+          edgeLabelBackground: '#fffaf2',
+          nodeBorder: '#aaa7a0',
+          fontFamily: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+        },
+      });
+      await window.mermaid.run({ querySelector: '.mermaid' });
+      resizeMermaidDiagrams();
+    }
+
+    if (window.mermaid) {
+      renderMermaid();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+    script.async = true;
+    script.onload = renderMermaid;
+    document.head.appendChild(script);
+  })();
 </script>
