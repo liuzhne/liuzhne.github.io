@@ -4,8 +4,58 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   post: CollectionEntry<'posts'>;
+  headings?: Heading[];
 }
-const { post } = Astro.props;
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface TocEntry extends Heading {
+  id: string;
+  parentId: string;
+  level: number;
+  hasChildren: boolean;
+}
+
+function buildTocEntries(headings: Heading[]) {
+  const entries: TocEntry[] = [];
+  const stack: TocEntry[] = [];
+
+  headings
+    .filter((heading) => (
+      heading.depth >= 1 &&
+      heading.depth <= 6 &&
+      heading.slug.trim() !== '' &&
+      heading.text.trim() !== ''
+    ))
+    .forEach((heading, index) => {
+      while (stack.length > 0 && heading.depth <= stack[stack.length - 1].depth) {
+        stack.pop();
+      }
+
+      const parent = stack.at(-1);
+      const entry: TocEntry = {
+        depth: heading.depth,
+        slug: heading.slug,
+        text: heading.text.trim(),
+        id: `toc-heading-${index}`,
+        parentId: parent?.id ?? '',
+        level: stack.length,
+        hasChildren: false,
+      };
+
+      if (parent) parent.hasChildren = true;
+      entries.push(entry);
+      stack.push(entry);
+    });
+
+  return entries;
+}
+
+const { post, headings = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, author } = post.data;
 const formattedDate = pubDate.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -17,11 +67,12 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
   month: 'long',
   day: 'numeric',
 });
+const tocEntries = buildTocEntries(headings);
 ---
 
 <Layout title={title} description={description}>
-  <article class="article-shell mx-auto px-5 py-10 md:py-12">
-    <header class="article-header mb-9 border-b border-stone-200 pb-6 dark:border-stone-800">
+  <article class="post-page-shell mx-auto px-5 py-10 md:py-12">
+    <header class="article-header article-main-column mb-9 border-b border-stone-200 pb-6 dark:border-stone-800">
       <h1 class="mb-3 font-serif text-2xl font-bold leading-tight tracking-normal text-stone-950 dark:text-stone-50 md:text-[1.7rem]">
         {title}
       </h1>
@@ -61,37 +112,166 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('zh-CN', {
       )}
     </header>
 
-    <p
-      id="post-search-status"
-      class="hidden mb-6 text-sm text-gray-500 dark:text-gray-400"
-      aria-live="polite"
-    >
-    </p>
+    <div class="post-reading-grid">
+      {tocEntries.length > 0 && (
+        <aside class="post-toc-panel" aria-labelledby="post-toc-heading" data-post-toc>
+          <h2 id="post-toc-heading" class="post-toc-title">内容导航</h2>
+          <ol class="post-toc-list">
+            {tocEntries.map((entry) => (
+              <li
+                class="post-toc-item"
+                data-toc-item
+                data-toc-id={entry.id}
+                data-toc-parent={entry.parentId}
+                data-toc-has-children={entry.hasChildren ? 'true' : 'false'}
+                data-toc-expanded="false"
+                data-toc-level={entry.level}
+                style={`--toc-level: ${entry.level};`}
+                hidden={entry.parentId !== ''}
+              >
+                <div class="post-toc-row">
+                  <a
+                    href={`#${entry.slug}`}
+                    class="post-toc-link"
+                    data-toc-link
+                    data-toc-depth={entry.depth}
+                  >
+                    <span class="post-toc-link-text">{entry.text}</span>
+                  </a>
+                  {entry.hasChildren && (
+                    <button
+                      class="post-toc-toggle"
+                      type="button"
+                      aria-label={`展开 ${entry.text} 的小节`}
+                      aria-expanded="false"
+                      data-toc-toggle
+                    >
+                      <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 4.5 13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      )}
 
-    <div data-post-content class="prose">
-      <slot />
+      <div class="article-main-column post-content-column">
+        <p
+          id="post-search-status"
+          class="hidden mb-6 text-sm text-gray-500 dark:text-gray-400"
+          aria-live="polite"
+        >
+        </p>
+
+        <div data-post-content class="prose">
+          <slot />
+        </div>
+
+        <footer class="mt-16 border-t border-stone-200 pt-8 dark:border-stone-800">
+          <a
+            href="/blog/"
+            class="inline-flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-50"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            返回博客列表
+          </a>
+        </footer>
+      </div>
     </div>
-
-    <footer class="mt-16 border-t border-stone-200 pt-8 dark:border-stone-800">
-      <a
-        href="/blog/"
-        class="inline-flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-50"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        返回博客列表
-      </a>
-    </footer>
   </article>
 </Layout>
 
 <script>
+  const postToc = document.querySelector<HTMLElement>('[data-post-toc]');
   const postSearchForm = document.querySelector<HTMLFormElement>('[data-search-mode="post"]');
   const postSearchInput = document.querySelector<HTMLInputElement>('[data-search-mode="post"] [data-blog-search-input]');
   const postContent = document.querySelector<HTMLElement>('[data-post-content]');
   const postSearchStatus = document.getElementById('post-search-status');
   const originalPostHtml = postContent?.innerHTML ?? '';
+
+  if (postToc) {
+    const tocItems = Array.from(postToc.querySelectorAll<HTMLElement>('[data-toc-item]'));
+    const itemById = new Map(tocItems.map((item) => [item.dataset.tocId ?? '', item]));
+    const childrenByParent = new Map<string, HTMLElement[]>();
+
+    tocItems.forEach((item) => {
+      const parentId = item.dataset.tocParent ?? '';
+      const children = childrenByParent.get(parentId) ?? [];
+      children.push(item);
+      childrenByParent.set(parentId, children);
+    });
+
+    function getTocChildren(item: HTMLElement) {
+      return childrenByParent.get(item.dataset.tocId ?? '') ?? [];
+    }
+
+    function setTocExpanded(item: HTMLElement, expanded: boolean) {
+      item.dataset.tocExpanded = expanded ? 'true' : 'false';
+      const toggle = item.querySelector<HTMLButtonElement>('[data-toc-toggle]');
+      const title = item.querySelector<HTMLElement>('[data-toc-link]')?.textContent?.trim() || '小节';
+
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', String(expanded));
+        toggle.setAttribute('aria-label', `${expanded ? '折叠' : '展开'} ${title} 的小节`);
+      }
+    }
+
+    function hideTocBranch(item: HTMLElement) {
+      setTocExpanded(item, false);
+      getTocChildren(item).forEach((child) => {
+        child.hidden = true;
+        hideTocBranch(child);
+      });
+    }
+
+    function revealTocPath(item: HTMLElement) {
+      const path: HTMLElement[] = [];
+      let current: HTMLElement | undefined = item;
+
+      while (current) {
+        path.unshift(current);
+        const parentId = current.dataset.tocParent;
+        current = parentId ? itemById.get(parentId) : undefined;
+      }
+
+      path.forEach((pathItem) => {
+        const parentId = pathItem.dataset.tocParent ?? '';
+        const siblings = childrenByParent.get(parentId) ?? [];
+
+        siblings.forEach((sibling) => {
+          if (sibling !== pathItem) hideTocBranch(sibling);
+        });
+
+        if (pathItem.dataset.tocHasChildren === 'true') {
+          setTocExpanded(pathItem, true);
+          getTocChildren(pathItem).forEach((child) => {
+            child.hidden = false;
+          });
+        }
+      });
+    }
+
+    postToc.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const trigger = target.closest<HTMLElement>('[data-toc-link], [data-toc-toggle]');
+      const item = trigger?.closest<HTMLElement>('[data-toc-item]');
+      if (!trigger || !item) return;
+
+      if (trigger.matches('[data-toc-toggle]') && item.dataset.tocExpanded === 'true') {
+        hideTocBranch(item);
+        return;
+      }
+
+      revealTocPath(item);
+    });
+  }
 
   function escapeRegExp(value: string) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
