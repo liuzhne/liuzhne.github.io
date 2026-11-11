@@ -118,3 +118,16 @@ def aggregate(items, results, blocker_cap=0.2):
 - 通用的多维 1–5 分量表改善有限，模型在相邻两档之间的区分并不稳定。
 - 语法、拼写这类低阶项不要单独列成维度；检查项要短、不重叠；汇总时要有一票否决，并且放在代码里算。
 - 纯主观的文风判断和大批量初筛，直接打总分仍然够用，成本也低得多。
+
+## 参考文献
+
+1. Liu et al. *G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment*. EMNLP 2023. [arXiv:2303.16634](https://arxiv.org/abs/2303.16634)
+2. Zheng et al. *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. NeurIPS 2023 Datasets and Benchmarks Track. [arXiv:2306.05685](https://arxiv.org/abs/2306.05685)
+3. Ye et al. *FLASK: Fine-grained Language Model Evaluation based on Alignment Skill Sets*. ICLR 2024. [arXiv:2307.10928](https://arxiv.org/abs/2307.10928)
+4. Kim et al. *Prometheus: Inducing Fine-grained Evaluation Capability in Language Models*. ICLR 2024. [arXiv:2310.08491](https://arxiv.org/abs/2310.08491)
+5. Saha et al. *Branch-Solve-Merge Improves Large Language Model Evaluation and Generation*. NAACL 2024. [arXiv:2310.15123](https://arxiv.org/abs/2310.15123)
+6. Qin et al. *InFoBench: Evaluating Instruction Following Ability in Large Language Models*. 2024. [arXiv:2401.03601](https://arxiv.org/abs/2401.03601)
+7. Lee et al. *CheckEval: A reliable LLM-as-a-Judge framework for evaluating text generation using checklists*. EMNLP 2025. [arXiv:2403.18771](https://arxiv.org/abs/2403.18771)
+8. Kim et al. *Prometheus 2: An Open Source Language Model Specialized in Evaluating Other Language Models*. EMNLP 2024. [arXiv:2405.01535](https://arxiv.org/abs/2405.01535)
+9. Lin et al. *WildBench: Benchmarking LLMs with Challenging Tasks from Real Users in the Wild*. 2024. [arXiv:2406.04770](https://arxiv.org/abs/2406.04770)
+10. Arora et al. *HealthBench: Evaluating Large Language Models Towards Improved Human Health*. OpenAI, 2025. [arXiv:2505.08775](https://arxiv.org/abs/2505.08775)
